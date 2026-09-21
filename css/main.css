@@ -2009,7 +2009,50 @@ body {
 #lyrics {
   z-index: 6;
 }
-  
+/* ===== MENSAJE EN LETRA CURSIVA ===== */
+.titulo {
+  font-family: "Norican", "Lobster", cursive;
+  font-weight: 400;      /* esta fuente solo tiene un grosor; sin esto se ve borrosa */
+  letter-spacing: 0;     /* en cursiva las letras deben ir unidas */
+  font-size: clamp(20px, 5.6vw, 30px);
+  line-height: 1.45;
+
+  position: absolute;
+  z-index: 5;
+  top: 8vh;
+  left: 50%;
+  transform: translateX(-50%);
+  margin: 0;
+  width: 92%;
+  max-width: 760px;
+  text-align: center;
+  text-shadow: 0 0 6px #000, 0 2px 10px rgba(0, 0, 0, 0.9);
+}
+
+.titulo .parrafo {
+  display: block;
+  margin-bottom: 0.7em;
+  text-wrap: balance;    /* reparte las lineas de forma pareja */
+}
+
+.titulo .parrafo:last-child {
+  margin-bottom: 0;
+}
+
+#lyrics {
+  position: absolute;
+  top: 48%;                 /* altura: mas arriba = numero menor, mas abajo = numero mayor */
+  bottom: auto;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 90%;
+  max-width: 700px;
+  margin: 0;
+  text-align: center;
+  font-size: clamp(16px, 4.6vw, 28px);
+  /* sombra oscura mas fuerte para que se lea sobre lo amarillo */
+  text-shadow: 0 0 4px #000, 0 0 10px #000, 0 2px 14px rgba(0, 0, 0, 0.95);
+}
 
 
 

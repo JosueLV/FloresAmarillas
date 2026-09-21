@@ -1,29 +1,26 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,500;1,900&display=swap');
- 
+
 * {
     font-family: 'Poppins', cursive;
     box-sizing: border-box;
 }
- 
+
 body {
     margin: 0;
-    padding: 0 16px;
+    padding: 24px 16px;
     color: azure;
     width: 100%;
-    height: 82vh;
+    min-height: 100vh;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     background-color: black;
 }
- 
- 
+
+
 /* ---------- Saludo: Hola Tatiana! ---------- */
- 
-/* Antes los espacios entre letras venian de los saltos de linea del HTML,
-   y por eso "Tatiana" se partia en cualquier lado.
-   Con flex ya no hay espacios ocultos: el espacio entre letras lo controla column-gap. */
+
 .greetings {
     display: flex;
     flex-wrap: nowrap;
@@ -33,16 +30,16 @@ body {
     font-weight: 900;
     line-height: 1.1;
 }
- 
+
 .greetings > span {
     animation: glow 2.5s ease-in-out infinite;
 }
- 
+
 /* Este span vacio es el espacio entre "Hola" y "Tatiana!" */
 .greetings .salto {
     width: 0.3em;
 }
- 
+
 @keyframes glow {
     0%, 100% {
         color: #fff;
@@ -53,7 +50,7 @@ body {
         text-shadow: none;
     }
 }
- 
+
 .greetings > span:nth-child(1)  { animation-delay: 0s;   }  /* H */
 .greetings > span:nth-child(2)  { animation-delay: .2s;  }  /* o */
 .greetings > span:nth-child(3)  { animation-delay: .4s;  }  /* l */
@@ -67,17 +64,83 @@ body {
 .greetings > span:nth-child(11) { animation-delay: 2s;   }  /* n */
 .greetings > span:nth-child(12) { animation-delay: 2.2s; }  /* a */
 .greetings > span:nth-child(13) { animation-delay: 2.4s; }  /* ! */
- 
- 
+
+
+/* ---------- Foto con marco de corazones ---------- */
+
+.foto {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    /* Espacio extra arriba y abajo para que los corazones no toquen el texto */
+    margin: 30px 0 26px;
+
+    /* Corazon rosado (dibujado con codigo, no necesita ninguna imagen) */
+    --corazon: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'%3E%3Cpath transform='translate(8 8)' fill='%23ff4d7d' d='M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z'/%3E%3C/svg%3E");
+}
+
+.foto img {
+    display: block;
+    width: auto;
+    height: auto;
+
+    /* Tamano: pequena-mediana, para que se vea todo lo demas.
+       Mas grande = sube el 34vh (ej. 40vh). Mas chica = bajalo (ej. 28vh). */
+    max-width: min(60vw, 260px);
+    max-height: 34vh;
+
+    /* Marco blanco con brillo celeste suave */
+    padding: 8px;
+    background: #fff;
+    border-radius: 16px;
+    box-shadow: 0 0 26px rgba(57, 198, 214, 0.45), 0 10px 26px rgba(0, 0, 0, 0.7);
+
+    animation: foto-aparece 1.2s ease both;
+}
+
+/* Fila de corazones sobre los 4 bordes del marco */
+.foto::before {
+    content: "";
+    position: absolute;
+    top: -14px;
+    right: -14px;
+    bottom: -14px;
+    left: -14px;
+    z-index: 2;
+    pointer-events: none;
+
+    /* Una capa por lado: arriba, abajo, izquierda y derecha */
+    background-image: var(--corazon), var(--corazon), var(--corazon), var(--corazon);
+    background-size: 28px 28px;                 /* mas grande = corazones mas grandes */
+    background-repeat: space no-repeat, space no-repeat, no-repeat space, no-repeat space;
+    background-position: left top, left bottom, left top, right top;
+
+    filter: drop-shadow(0 0 4px rgba(255, 77, 125, 0.8));
+    animation: latido 1.8s ease-in-out infinite;
+}
+
+@keyframes foto-aparece {
+    from { opacity: 0; transform: scale(0.96); }
+    to   { opacity: 1; transform: scale(1); }
+}
+
+/* Los corazones laten suavemente */
+@keyframes latido {
+    0%, 100% { transform: scale(1); }
+    50%      { transform: scale(1.03); }
+}
+
+
 /* ---------- Texto y boton ---------- */
- 
+
 .description {
     font-size: 1.5rem;
+    margin-top: 12px;
     margin-bottom: 20px;
     text-align: center;
     text-wrap: balance;
 }
- 
+
 /* Todo el boton es el enlace, asi se toca en cualquier parte */
 .botones {
     display: inline-block;
@@ -89,15 +152,15 @@ body {
     text-decoration: none;
     -webkit-tap-highlight-color: transparent;
 }
- 
+
 .botones:focus,
 .botones:active {
     background-color: rgb(50, 194, 194);
 }
- 
- 
+
+
 /* ---------- Celular ---------- */
- 
+
 @media screen and (max-width: 574px) {
     /* "Hola" arriba y "Tatiana!" abajo, centrados */
     .greetings {
@@ -105,16 +168,15 @@ body {
         font-size: clamp(2.8rem, 17vw, 4.5rem);
         font-weight: 800;
     }
- 
+
     .greetings .salto {
         flex-basis: 100%;
         width: 100%;
         height: 0;
     }
- 
+
     /* Se achica con el ancho de la pantalla para que quepa en una linea */
     .description {
         font-size: clamp(0.95rem, 4.6vw, 1.5rem);
-        margin-top: 12px;
     }
 }
